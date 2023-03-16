@@ -20,17 +20,17 @@ public class PublicationDao {
     }
 
     public List<Publication> getPublicationsForUserBySubscriptions(int userId){
-        String query = "select " +
-                "p.image, " +
-                "p.description, " +
-                "p.datetime, " +
-                "s.subscribeuserid" +
-                "from \"publications\" as p " +
-                "inner join \"users\" as u " +
-                "on u.id = p.userid " +
-                "inner join \"subscriptions\" as s " +
-                "on s.subscribeduserid = u.id " +
-                "where u.id = ?;";
+        String query = "select\n" +
+                "    p.image,\n" +
+                "    p.description,\n" +
+                "    p.publicationdate,\n" +
+                "    s.subscribedto\n" +
+                "    from \"publications\" as p\n" +
+                "inner join \"users\" as u\n" +
+                "on u.userid = p.userid\n" +
+                "inner join \"subscriptions\" as s\n" +
+                "on s.subscribedto = u.userid\n" +
+                "where u.userid = ?";
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Publication.class), userId);
     }
 }

@@ -1,9 +1,6 @@
 package com.example.hw50.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +8,7 @@ import java.time.LocalDateTime;
 @Setter
 @RequiredArgsConstructor
 @Data
+@Builder
 public class Like {
     private int id;
     private int likedPublicationId;

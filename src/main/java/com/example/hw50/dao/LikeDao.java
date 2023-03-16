@@ -15,12 +15,12 @@ public class LikeDao {
 
     public String userLikedPublication(int publicationId){
         String result = String.valueOf(getPublicationsLikes(publicationId));
-        if(result.isEmpty()){
+        if(!result.isEmpty()){
             return "есть лайк";
         }else return "нет лайка";
     }
-    public Like getPublicationsLikes(int publicationId){
-        String query = "SELECT * FROM \"likes\" WHERE publicationId = ? ";
-        return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Like.class), publicationId);
+    public List<Like> getPublicationsLikes(int publicationId){
+        String query = "SELECT * FROM \"likes\" WHERE publicationId = ?";
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Like.class), publicationId);
     }
 }
