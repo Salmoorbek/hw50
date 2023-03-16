@@ -4,11 +4,11 @@ import com.example.hw50.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@Service
+@Controller
 @RequiredArgsConstructor
 public class LikeController {
     private final LikeService likeService;
