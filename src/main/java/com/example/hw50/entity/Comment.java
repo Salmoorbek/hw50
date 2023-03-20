@@ -1,16 +1,12 @@
 package com.example.hw50.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
 @Data
 @Builder
+@NoArgsConstructor
 public class Comment {
     private int id;
     private String commentText;

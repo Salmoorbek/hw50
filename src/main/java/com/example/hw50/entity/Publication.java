@@ -1,14 +1,12 @@
 package com.example.hw50.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Publication {
     private int id;
     private String img;

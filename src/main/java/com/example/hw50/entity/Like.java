@@ -4,11 +4,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
 @Data
 @Builder
+@NoArgsConstructor
 public class Like {
     private int id;
     private int likedPublicationId;

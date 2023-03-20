@@ -1,12 +1,10 @@
 package com.example.hw50.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class User {
     private int id;
     private String name;
