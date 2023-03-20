@@ -28,7 +28,7 @@ public class SubscriptionDao extends BaseDao{
     }
     public void saveAll(List<Subscription> subscriptions) {
         String sql = "INSERT INTO subscriptions (subscribes, subscribedTo, subscriptionDate) " +
-                "VALUES (?,?,?,?) " ;
+                "VALUES (?,?,?) " ;
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 
             @Override
