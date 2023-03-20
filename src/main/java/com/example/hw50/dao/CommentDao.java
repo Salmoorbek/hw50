@@ -1,12 +1,10 @@
 package com.example.hw50.dao;
 
 import com.example.hw50.entity.Comment;
-import com.example.hw50.entity.User;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,7 +18,7 @@ public class CommentDao extends BaseDao{
 
     @Override
     public void createTable() {
-        jdbcTemplate.execute("CREATE TABLE comments (" +
+        jdbcTemplate.execute("CREATE TABLE if not exists comments (" +
                 "commentId SERIAL PRIMARY KEY, " +
                 "commentText TEXT, " +
                 "commentDate TEXT)");
@@ -45,5 +43,25 @@ public class CommentDao extends BaseDao{
     public void deleteAll() {
         String sql = "delete from comments";
         jdbcTemplate.update(sql);
+    }
+
+    public void save(Comment comment) {
+        String sql = "insert into comments (commenttext, commentdate) " +
+                "values(?,?)";
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, comment.getCommentText());
+            ps.setString(2, String.valueOf(comment.getTimeOfComment()));
+            return ps;
+        });
+    }
+    public void deleteById(Long publicationId) {
+        String sql = "delete from comments " +
+                "where commentid = ?";
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setLong(1, publicationId);
+            return ps;
+        });
     }
 }

@@ -1,5 +1,7 @@
 package com.example.hw50.dao;
 
+import com.example.hw50.dto.UserDto;
+import com.example.hw50.entity.Comment;
 import com.example.hw50.entity.User;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -8,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class UserDao extends BaseDao{
 
     @Override
     public void createTable() {
-        jdbcTemplate.execute("CREATE TABLE users " +
+        jdbcTemplate.execute("CREATE TABLE if not exists users" +
                 "(userId SERIAL PRIMARY KEY, " +
                 "name TEXT NOT NULL, " +
                 "email TEXT NOT NULL, " +
@@ -76,5 +79,21 @@ public class UserDao extends BaseDao{
         if (!result.isEmpty()) {
             return "Пользователь есть в системе";
         } else return "Пользователя нету в системе";
+    }
+    public List<UserDto> login(String email, String password){
+        String sql = "select * from users where email = ? and password = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDto.class),email, password);
+    }
+    public void register(User user) {
+        String sql = "insert into users (name, email,accname, password) " +
+                "values(?,?,?,?)";
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getAccName());
+            ps.setString(4, user.getPassword());
+            return ps;
+        });
     }
 }

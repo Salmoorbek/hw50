@@ -9,12 +9,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Subscription {
     private int id;
+    private int userId;
     private int subscribes;
     private int subscribedTo;
     private LocalDateTime subscribeTime;
 
-    public Subscription(int id, int subscribes, int subscribedTo, LocalDateTime subscribeTime) {
+    public Subscription(int id, int userId, int subscribes, int subscribedTo, LocalDateTime subscribeTime) {
         this.id = id;
+        this.userId = userId;
         this.subscribes = subscribes;
         this.subscribedTo = subscribedTo;
         this.subscribeTime = subscribeTime;

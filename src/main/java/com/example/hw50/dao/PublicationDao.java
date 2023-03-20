@@ -1,13 +1,13 @@
 package com.example.hw50.dao;
 
 import com.example.hw50.entity.Publication;
-import com.example.hw50.entity.User;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,10 +17,11 @@ public class PublicationDao extends BaseDao{
     public PublicationDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         super(jdbcTemplate, namedParameterJdbcTemplate);
     }
+    private Connection conn;
 
     @Override
     public void createTable() {
-        jdbcTemplate.execute("CREATE TABLE publications (" +
+        jdbcTemplate.execute("CREATE TABLE if not exists publications (" +
                 "publicationId SERIAL PRIMARY KEY, " +
                 "userId INTEGER, " +
                 "image TEXT, " +
@@ -71,5 +72,25 @@ public class PublicationDao extends BaseDao{
                 "on s.subscribedto = u.userid\n" +
                 "where u.userid = ?";
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Publication.class), userId);
+    }
+    public void save(Publication publication) {
+        String sql = "insert into publications (image, description, publicationdate) " +
+                "values(?,?,?)";
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, publication.getImg());
+            ps.setString(2, publication.getDescription());
+            ps.setString(3, String.valueOf(publication.getTimeOfPublication()));
+            return ps;
+        });
+    }
+    public void deleteById(Long publicationId) {
+        String sql = "delete from publications " +
+                "where publicationid = ?";
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setLong(1, publicationId);
+            return ps;
+        });
     }
 }

@@ -18,7 +18,7 @@ public class SubscriptionDao extends BaseDao{
 
     @Override
     public void createTable() {
-        jdbcTemplate.execute("CREATE TABLE subscriptions (" +
+        jdbcTemplate.execute("CREATE TABLE if not exists subscriptions (" +
                 "id bigserial primary key," +
                 "subscribes INTEGER, " +
                 "subscribedTo INTEGER, " +
@@ -28,7 +28,7 @@ public class SubscriptionDao extends BaseDao{
     }
     public void saveAll(List<Subscription> subscriptions) {
         String sql = "INSERT INTO subscriptions (subscribes, subscribedTo, subscriptionDate) " +
-                "VALUES (?,?,?) " ;
+                "VALUES (?,?,?,?) " ;
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 
             @Override
@@ -48,4 +48,5 @@ public class SubscriptionDao extends BaseDao{
         String sql = "delete from subscriptions";
         jdbcTemplate.update(sql);
     }
+
 }
