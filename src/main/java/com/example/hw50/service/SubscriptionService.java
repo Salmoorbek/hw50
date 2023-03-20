@@ -8,4 +8,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SubscriptionService {
     private final SubscriptionDao subscriptionDao;
+
+    public void followForUser(){
+        // TODO: 20/3/23 подписываться на других пользователей, что бы видеть их публикации у себя в ленте 
+    }
 }
