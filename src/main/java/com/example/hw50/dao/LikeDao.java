@@ -1,5 +1,6 @@
 package com.example.hw50.dao;
 
+import com.example.hw50.dto.LikeDto;
 import com.example.hw50.entity.Like;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -44,19 +45,43 @@ public class LikeDao extends BaseDao{
             }
         });
     }
+
     public void deleteAll() {
         String sql = "delete from likes";
         jdbcTemplate.update(sql);
     }
 
-    public String userLikedPublication(int publicationId){
-        String result = String.valueOf(getPublicationsLikes(publicationId));
-        if(!result.isEmpty()){
-            return "есть лайк";
-        }else return "нет лайка";
+    public void alterSequenceLike() {
+        String sql = "alter sequence likes_likeid_seq restart with 1";
+        jdbcTemplate.update(sql);
     }
-    public List<Like> getPublicationsLikes(int publicationId){
+
+    public String userLikedPublication(int publicationId) {
+        String result = String.valueOf(getPublicationsLikes(publicationId));
+        if (!result.isEmpty()) {
+            return "есть лайк";
+        } else return "нет лайка";
+    }
+
+    public List<Like> getPublicationsLikes(int publicationId) {
         String query = "SELECT * FROM \"likes\" WHERE publicationId = ?";
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Like.class), publicationId);
+    }
+
+    public void save(Like likes) {
+        String sql = "INSERT INTO likes (userId, publicationId, likeDate)" +
+                "VALUES (?,?,?)";
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, likes.getUserId());
+            ps.setInt(2, likes.getLikedPublicationId());
+            ps.setString(3, String.valueOf(likes.getLickedTime()));
+            return ps;
+        });
+    }
+
+    public List<LikeDto> getAllLikes() {
+        String sql = "SELECT * FROM likes";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(LikeDto.class));
     }
 }

@@ -51,8 +51,14 @@ public class UserDao extends BaseDao{
             }
         });
     }
+
     public void deleteAll() {
         String sql = "delete from users";
+        jdbcTemplate.update(sql);
+    }
+
+    public void alertSequenceUser() {
+        String sql = "alter sequence users_userid_seq restart with 1";
         jdbcTemplate.update(sql);
     }
 
@@ -93,5 +99,10 @@ public class UserDao extends BaseDao{
             ps.setString(4, user.getPassword());
             return ps;
         });
+    }
+
+    public List<UserDto> getAllUsers() {
+        String sql = "SELECT * FROM users";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(UserDto.class));
     }
 }

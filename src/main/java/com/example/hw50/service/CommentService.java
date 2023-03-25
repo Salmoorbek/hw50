@@ -15,6 +15,7 @@ public class CommentService {
 
     public CommentDto addComment(CommentDto commentDto) {
         var comment = Comment.builder()
+                .id(commentDao.getAllComments().size() + 1)
                 .commentText(commentDto.getCommentText())
                 .timeOfComment(commentDto.getTimeOfComment())
                 .build();

@@ -23,6 +23,7 @@ public class PublicationService {
 
     public PublicationDto addPublication(PublicationDto publicationDto) {
         var publication = Publication.builder()
+                .id(publicationDao.getAllPubs().size() + 1)
                 .img(publicationDto.getImg())
                 .description(publicationDto.getDescription())
                 .timeOfPublication(publicationDto.getPublicationTime())

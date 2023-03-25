@@ -1,13 +1,16 @@
 package com.example.hw50.dao;
 
+import com.example.hw50.dto.SubscriptionDto;
 import com.example.hw50.entity.Subscription;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -19,7 +22,7 @@ public class SubscriptionDao extends BaseDao{
     @Override
     public void createTable() {
         jdbcTemplate.execute("CREATE TABLE if not exists subscriptions (" +
-                "id bigserial primary key," +
+                "subscriptionId bigserial primary key," +
                 "subscribes INTEGER, " +
                 "subscribedTo INTEGER, " +
                 "subscriptionDate TEXT," +
@@ -44,9 +47,31 @@ public class SubscriptionDao extends BaseDao{
             }
         });
     }
+
     public void deleteAll() {
         String sql = "delete from subscriptions";
         jdbcTemplate.update(sql);
     }
 
+    public void alterSequenceSubs() {
+        String sql = "alter sequence subscriptions_subscriptionid_seq restart with 1";
+        jdbcTemplate.update(sql);
+    }
+
+    public void save(Subscription subscription) {
+        String sql = "INSERT INTO subscriptions (subscribes, subscribedTo, subscriptionDate) " +
+                "VALUES (?,?,?) ";
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, subscription.getSubscribes());
+            ps.setInt(2, subscription.getSubscribedTo());
+            ps.setTimestamp(3, Timestamp.valueOf(subscription.getSubscribeTime()));
+            return ps;
+        });
+    }
+
+    public List<SubscriptionDto> getAllSubs() {
+        String sql = "SELECT * FROM subscriptions";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SubscriptionDto.class));
+    }
 }

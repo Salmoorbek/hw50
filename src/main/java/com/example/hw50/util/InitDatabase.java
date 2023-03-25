@@ -25,11 +25,17 @@ public class InitDatabase {
             likeDao.createTable();
             subscriptionDao.createTable();
 
-            userDao.deleteAll();
             publicationDao.deleteAll();
             commentDao.deleteAll();
             likeDao.deleteAll();
             subscriptionDao.deleteAll();
+            userDao.deleteAll();
+
+            userDao.alertSequenceUser();
+            publicationDao.alertSequencePublication();
+            commentDao.alterSequenceComment();
+            likeDao.alterSequenceLike();
+            subscriptionDao.alterSequenceSubs();
 
             userDao.saveAll(createUsers());
             publicationDao.saveAll(createPublications());

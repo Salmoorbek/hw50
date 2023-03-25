@@ -38,6 +38,7 @@ public class UserService {
     }
     public UserDto register(User user) {
         var usr = User.builder()
+                .id(usersDao.getAllUsers().size() + 1)
                 .name(user.getName())
                 .email(user.getEmail())
                 .accName(user.getAccName())

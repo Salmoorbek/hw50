@@ -1,5 +1,6 @@
 package com.example.hw50.dao;
 
+import com.example.hw50.dto.PublicationDto;
 import com.example.hw50.entity.Publication;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -48,18 +49,24 @@ public class PublicationDao extends BaseDao{
             }
         });
     }
+
     public void deleteAll() {
         String sql = "delete from publications";
         jdbcTemplate.update(sql);
     }
 
-    public List<Publication> getPublicationsForUser(int userId){
+    public void alertSequencePublication() {
+        String sql = "alter sequence publications_publicationid_seq restart with 1";
+        jdbcTemplate.update(sql);
+    }
+
+    public List<Publication> getPublicationsForUser(int userId) {
         String query = "select * from \"publications\" " +
                 "where userId != ?;";
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Publication.class), userId);
     }
 
-    public List<Publication> getPublicationsForUserBySubscriptions(int userId){
+    public List<Publication> getPublicationsForUserBySubscriptions(int userId) {
         String query = "select\n" +
                 "    p.image,\n" +
                 "    p.description,\n" +
@@ -84,6 +91,7 @@ public class PublicationDao extends BaseDao{
             return ps;
         });
     }
+
     public void deleteById(Long publicationId) {
         String sql = "delete from publications " +
                 "where publicationid = ?";
@@ -92,5 +100,10 @@ public class PublicationDao extends BaseDao{
             ps.setLong(1, publicationId);
             return ps;
         });
+    }
+
+    public List<PublicationDto> getAllPubs() {
+        String sql = "SELECT * FROM publications";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PublicationDto.class));
     }
 }

@@ -1,7 +1,9 @@
 package com.example.hw50.dao;
 
+import com.example.hw50.dto.CommentDto;
 import com.example.hw50.entity.Comment;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,7 @@ public class CommentDao extends BaseDao{
                 "commentText TEXT, " +
                 "commentDate TEXT)");
     }
+
     public void saveAll(List<Comment> comments) {
         String sql = "INSERT INTO comments (commenttext, commentdate) " +
                 "VALUES (?,?)";
@@ -40,8 +43,19 @@ public class CommentDao extends BaseDao{
             }
         });
     }
+
+    public List<CommentDto> getAllComments() {
+        String sql = "SELECT * FROM comments";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(CommentDto.class));
+    }
+
     public void deleteAll() {
         String sql = "delete from comments";
+        jdbcTemplate.update(sql);
+    }
+
+    public void alterSequenceComment() {
+        String sql = "alter sequence comments_commentid_seq restart with 1";
         jdbcTemplate.update(sql);
     }
 
