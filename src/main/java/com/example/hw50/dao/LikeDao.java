@@ -1,7 +1,6 @@
 package com.example.hw50.dao;
 
 import com.example.hw50.entity.Like;
-import com.example.hw50.entity.User;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
