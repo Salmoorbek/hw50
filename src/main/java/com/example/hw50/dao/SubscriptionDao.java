@@ -2,6 +2,7 @@ package com.example.hw50.dao;
 
 import com.example.hw50.dto.SubscriptionDto;
 import com.example.hw50.entity.Subscription;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,8 +16,9 @@ import java.util.List;
 
 @Component
 public class SubscriptionDao extends BaseDao{
-    public SubscriptionDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        super(jdbcTemplate, namedParameterJdbcTemplate);
+
+    public SubscriptionDao(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
     }
 
     @Override

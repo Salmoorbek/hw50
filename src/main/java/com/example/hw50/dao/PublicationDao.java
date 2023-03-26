@@ -15,8 +15,8 @@ import java.util.List;
 
 @Component
 public class PublicationDao extends BaseDao{
-    public PublicationDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        super(jdbcTemplate, namedParameterJdbcTemplate);
+    public PublicationDao(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
     }
     private Connection conn;
 
@@ -102,8 +102,8 @@ public class PublicationDao extends BaseDao{
         });
     }
 
-    public List<PublicationDto> getAllPubs() {
+    public List<Publication> getAllPubs() {
         String sql = "SELECT * FROM publications";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PublicationDto.class));
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Publication.class));
     }
 }

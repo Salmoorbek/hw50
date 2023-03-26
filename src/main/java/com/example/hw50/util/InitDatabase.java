@@ -46,11 +46,11 @@ public class InitDatabase {
     }
     private List<User> createUsers(){
         List<User> users = new ArrayList<>();
-        users.add(new User(1,"salmor","ss@mail.ru","salmorSS","qwerty",7,0,0));
-        users.add(new User(2, "sam", "sss@mail.com", "samS", "qwerty", 0,0,6));
-        users.add(new User(3, "samuel", "s@gmail.com", "samuelSS", "qwerty", 3,6,0));
-        users.add(new User(4, "sasha", "sasha@gmail.com", "sashka", "qwerty", 0,4,0));
-        users.add(new User(5, "serdar", "serdar@gmail.com", "sergei", "qwerty", 4,0,0));
+        users.add(new User(1,"salmor","ss@mail.ru","salmorSS","qwerty",true,7,0,0));
+        users.add(new User(2, "sam", "sss@mail.com", "samS", "qwerty",true, 0,0,6));
+        users.add(new User(3, "samuel", "s@gmail.com", "samuelSS", "qwerty",true, 3,6,0));
+        users.add(new User(4, "sasha", "sasha@gmail.com", "sashka", "qwerty",true, 0,4,0));
+        users.add(new User(5, "serdar", "serdar@gmail.com", "sergei", "qwerty",true, 4,0,0));
         return users;
     }
 

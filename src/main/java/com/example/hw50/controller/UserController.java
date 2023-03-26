@@ -15,27 +15,27 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
     @GetMapping("/getUserByEmail/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable String email){
+    public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email){
         return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
     @GetMapping("/getUserByName/{name}")
-    public ResponseEntity<User> getUserByName(@PathVariable String name){
+    public ResponseEntity<UserDto> getUserByName(@PathVariable String name){
         return new ResponseEntity<>(userService.getUserByName(name), HttpStatus.OK);
     }
     @GetMapping("/getUserByNickName/{nickName}")
-    public ResponseEntity<User> getUserByNickName(@PathVariable String nickName){
+    public ResponseEntity<UserDto> getUserByNickName(@PathVariable String nickName){
         return new ResponseEntity<>(userService.getUserByNickName(nickName), HttpStatus.OK);
     }
     @GetMapping("/registered/{email}")
     public ResponseEntity<String> isRegistered(@PathVariable String email) {
         return new ResponseEntity<>(userService.isRegisteredEmail(email), HttpStatus.OK);
     }
-    @GetMapping("/login/{email}/{password}")
-    public ResponseEntity<String> isLogin(@PathVariable String email,@PathVariable String password) {
-        return new ResponseEntity<>(userService.author(email,password), HttpStatus.OK);
-    }
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDto addComment(@RequestBody User user){
-        return userService.register(user);
-    }
+//    @GetMapping("/login/{email}/{password}")
+//    public ResponseEntity<String> isLogin(@PathVariable String email,@PathVariable String password) {
+//        return new ResponseEntity<>(userService.author(email,password), HttpStatus.OK);
+//    }
+//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public UserDto addComment(@RequestBody User user){
+//        return userService.register(user);
+//    }
 }

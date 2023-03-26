@@ -14,8 +14,8 @@ import java.util.List;
 
 @Component
 public class CommentDao extends BaseDao{
-    public CommentDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        super(jdbcTemplate, namedParameterJdbcTemplate);
+    public CommentDao(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
     }
 
     @Override

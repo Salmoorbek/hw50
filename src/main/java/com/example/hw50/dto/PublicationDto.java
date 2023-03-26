@@ -4,6 +4,7 @@ import com.example.hw50.entity.Publication;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder(access = AccessLevel.PRIVATE)

@@ -12,6 +12,7 @@ public class UserDto {
     private String name;
     private String email;
     private String accName;
+    private Boolean enabled = Boolean.TRUE;
     private int countPublication;
     private int countSubscription;
     private int countFollower;
@@ -21,6 +22,7 @@ public class UserDto {
                 .name(user.getName())
                 .email(user.getEmail())
                 .accName(user.getAccName())
+                .enabled(user.getEnabled())
                 .countPublication(user.getCountPublication())
                 .countSubscription(user.getCountSubscription())
                 .countFollower(user.getCountFollower())

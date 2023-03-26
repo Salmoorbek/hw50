@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +19,11 @@ public class PublicationController {
     private final PublicationService publicationsService;
 
     @GetMapping("/takePublicationForUser/{userId}")
-    public ResponseEntity<List<Publication>>  takePublicationsForUser(@PathVariable String userId){
+    public ResponseEntity<List<PublicationDto>>  takePublicationsForUser(@PathVariable String userId){
         return new ResponseEntity<>(publicationsService.getPublicationForUser(Integer.parseInt(userId)), HttpStatus.OK);
     }
     @GetMapping("/takePublicationsForUserBySubscriptions/{userId}")
-    public ResponseEntity<List<Publication>> takePublicationsForUserBySubscriptions(@PathVariable String userId){
+    public ResponseEntity<List<PublicationDto>> takePublicationsForUserBySubscriptions(@PathVariable String userId){
         return new ResponseEntity<>(publicationsService.getPublicationsForUserBySubscriptions(Integer.parseInt(userId)), HttpStatus.OK);
     }
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

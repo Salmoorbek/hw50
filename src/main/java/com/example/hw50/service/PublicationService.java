@@ -7,18 +7,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PublicationService {
     private final PublicationDao publicationDao;
 
-    public List<Publication> getPublicationForUser(int userId){
-        return publicationDao.getPublicationsForUser(userId);
+    public List<PublicationDto> getPublicationForUser(int userId){
+        return publicationDao.getPublicationsForUser(userId)
+                .stream()
+                .map(PublicationDto::from)
+                .collect(Collectors.toList());
+//        return publicationDao.getPublicationsForUser(userId);
     }
 
-    public List<Publication> getPublicationsForUserBySubscriptions(int userId) {
-        return publicationDao.getPublicationsForUserBySubscriptions(userId);
+    public List<PublicationDto> getPublicationsForUserBySubscriptions(int userId) {
+        return publicationDao.getPublicationsForUserBySubscriptions(userId)
+                .stream()
+                .map(PublicationDto::from)
+                .collect(Collectors.toList());
+//        return publicationDao.getPublicationsForUserBySubscriptions(userId);
     }
 
     public PublicationDto addPublication(PublicationDto publicationDto) {
