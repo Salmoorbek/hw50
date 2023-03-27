@@ -27,27 +27,4 @@ public class UserService {
     public String isRegisteredEmail(String email){
         return usersDao.isRegisteredEmail(email);
     }
-
-//    public String author(String email, String password){
-//        List<UserDto> userDtos = usersDao.login(email, password);
-//        if(userDtos!=null)
-//            return "Вы зашли";
-//        else
-//            return "Такого пользователя нет";
-//    }
-//    public UserDto register(User user) {
-//        var usr = User.builder()
-//                .id(usersDao.getAllUsers().size() + 1)
-//                .name(user.getName())
-//                .email(user.getEmail())
-//                .accName(user.getAccName())
-//                .password(user.getPassword())
-//                .countFollower(0)
-//                .countPublication(0)
-//                .countPublication(0)
-//                .build();
-//
-//        usersDao.register(usr);
-//        return UserDto.from(usr);
-//    }
 }

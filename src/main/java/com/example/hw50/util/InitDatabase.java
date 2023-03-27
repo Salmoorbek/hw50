@@ -34,7 +34,6 @@ public class InitDatabase {
             likeDao.alterSequenceLike();
             subscriptionDao.alterSequenceSubs();
 
-//            userDao.saveAll(createUsers());
             userDao.register(createUsers().get(0));
             userDao.register(createUsers().get(1));
             userDao.register(createUsers().get(2));

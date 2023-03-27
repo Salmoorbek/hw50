@@ -2,11 +2,9 @@ package com.example.hw50.dao;
 
 import com.example.hw50.dto.SubscriptionDto;
 import com.example.hw50.entity.Subscription;
-import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;

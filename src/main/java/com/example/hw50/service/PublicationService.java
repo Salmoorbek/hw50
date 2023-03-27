@@ -19,7 +19,6 @@ public class PublicationService {
                 .stream()
                 .map(PublicationDto::from)
                 .collect(Collectors.toList());
-//        return publicationDao.getPublicationsForUser(userId);
     }
 
     public List<PublicationDto> getPublicationsForUserBySubscriptions(int userId) {
@@ -27,7 +26,6 @@ public class PublicationService {
                 .stream()
                 .map(PublicationDto::from)
                 .collect(Collectors.toList());
-//        return publicationDao.getPublicationsForUserBySubscriptions(userId);
     }
 
     public PublicationDto addPublication(PublicationDto publicationDto) {

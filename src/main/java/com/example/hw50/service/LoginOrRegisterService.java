@@ -11,15 +11,6 @@ import org.springframework.stereotype.Service;
 public class LoginOrRegisterService {
     private final UserDao userDao;
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Optional<User> optUser = Optional.ofNullable(userDao.findUserByEmail(username));
-//        if (optUser.isEmpty()) {
-//            throw new UsernameNotFoundException("Not found");
-//        }
-//        return (UserDetails) optUser.get();
-//    }
-
     public String author(String accname, String password) {
         UserDto userDtos = UserDto.from(userDao.login(accname, password));
         if (userDtos != null)
