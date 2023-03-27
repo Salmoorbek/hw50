@@ -5,7 +5,6 @@ import com.example.hw50.entity.Comment;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
@@ -22,19 +21,22 @@ public class CommentDao extends BaseDao{
     public void createTable() {
         jdbcTemplate.execute("CREATE TABLE if not exists comments (" +
                 "commentId SERIAL PRIMARY KEY, " +
+                "publicationId SERIAL," +
                 "commentText TEXT, " +
-                "commentDate TEXT)");
+                "commentDate TEXT," +
+                "FOREIGN KEY (publicationId) REFERENCES publications(publicationId))");
     }
 
     public void saveAll(List<Comment> comments) {
-        String sql = "INSERT INTO comments (commenttext, commentdate) " +
-                "VALUES (?,?)";
+        String sql = "INSERT INTO comments (commenttext, commentdate, publicationId) " +
+                "VALUES (?,?,?)";
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setString(1, comments.get(i).getCommentText());
                 ps.setString(2, String.valueOf(comments.get(i).getTimeOfComment()));
+                ps.setInt(3, comments.get(i).getPublicationId());
             }
 
             @Override

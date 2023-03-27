@@ -1,6 +1,8 @@
 package com.example.hw50.entity;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -9,11 +11,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Comment {
     private int id;
+    private int publicationId;
     private String commentText;
     private LocalDateTime timeOfComment;
 
-    public Comment(int id, String commentText, LocalDateTime timeOfComment) {
+    public Comment(int id, int publicationId, String commentText, LocalDateTime timeOfComment) {
         this.id = id;
+        this.publicationId = publicationId;
         this.commentText = commentText;
         this.timeOfComment = timeOfComment;
     }

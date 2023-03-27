@@ -1,8 +1,9 @@
 package com.example.hw50.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
-@Configuration
+@Configurable
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -25,16 +26,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
+    @Autowired
+    protected void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
                 .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT accname, password, enabled " +
-                        "from users where accname = ?")
-                .authoritiesByUsernameQuery("SELECT u.accname, a.authority " +
-                        "from authorities a " +
-                        "inner join users u on a.user_id = u.id " +
-                        "where accname = ?");
+                .usersByUsernameQuery("SELECT email, password, enabled from users where email=?")
+                .authoritiesByUsernameQuery("select email, role from users where email=?");
     }
 
     @Override
@@ -46,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/publications/**",
                         "/subscriptions/**").fullyAuthenticated()
                 .antMatchers(HttpMethod.DELETE, "/comments/**",
-                        "/posts/**").fullyAuthenticated();
+                        "/publications/**").fullyAuthenticated();
 
         http.authorizeRequests()
                 .anyRequest()
@@ -56,6 +53,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.httpBasic();
         http.formLogin().disable().logout().disable();
         http.csrf().disable();
-        http.cors();
     }
 }

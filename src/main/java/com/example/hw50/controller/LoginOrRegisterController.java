@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/register")
 public class LoginOrRegisterController {
     private final LoginOrRegisterService loginOrRegisterService;
+
     @GetMapping("/login/{accName}/{password}")
     public ResponseEntity<String> isLogin(@PathVariable String accName, @PathVariable String password) {
-        return new ResponseEntity<>(loginOrRegisterService.author(accName,password), HttpStatus.OK);
+        return new ResponseEntity<>(loginOrRegisterService.author(accName, password), HttpStatus.OK);
     }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDto addComment(@RequestBody User user){
+    public UserDto addComment(@RequestBody User user) {
         return loginOrRegisterService.register(user);
     }
 }

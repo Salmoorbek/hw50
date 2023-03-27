@@ -1,11 +1,17 @@
 package com.example.hw50.entity;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
+import java.util.Collection;
+
+@Getter
+@Setter
 @Builder
-@NoArgsConstructor
-public class User {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class User implements UserDetails {
     private int id;
     private String name;
     private String email;
@@ -15,16 +21,35 @@ public class User {
     private int countPublication;
     private int countSubscription;
     private int countFollower;
+    private String role;
 
-    public User(int id, String name, String email, String accName, String password, Boolean enabled, int countPublication, int countSubscription, int countFollower) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.accName = accName;
-        this.password = password;
-        this.enabled = enabled;
-        this.countPublication = countPublication;
-        this.countSubscription = countSubscription;
-        this.countFollower = countFollower;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

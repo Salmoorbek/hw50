@@ -1,11 +1,9 @@
 package com.example.hw50.dao;
 
-import com.example.hw50.dto.PublicationDto;
 import com.example.hw50.entity.Publication;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -37,7 +35,7 @@ public class PublicationDao extends BaseDao{
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setInt(1, publications.get(i).getId());
+                ps.setInt(1, publications.get(i).getUserID());
                 ps.setString(2, publications.get(i).getImg());
                 ps.setString(3, publications.get(i).getDescription());
                 ps.setString(4, String.valueOf(publications.get(i).getTimeOfPublication()));

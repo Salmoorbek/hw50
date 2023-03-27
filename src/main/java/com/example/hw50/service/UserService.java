@@ -2,17 +2,16 @@ package com.example.hw50.service;
 
 import com.example.hw50.dao.UserDao;
 import com.example.hw50.dto.UserDto;
-import com.example.hw50.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserDao usersDao;
+    private final PasswordEncoder encoder;
     public UserDto getUserByEmail(String email){
         return UserDto.from(usersDao.findUserByEmail(email));
     }

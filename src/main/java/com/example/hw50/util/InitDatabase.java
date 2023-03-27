@@ -9,12 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Configuration
 public class InitDatabase {
-
-    private static final Random r = new Random();
 
     @Bean
     CommandLineRunner init(UserDao userDao, PublicationDao publicationDao, CommentDao commentDao, LikeDao likeDao, SubscriptionDao subscriptionDao) {
@@ -37,24 +34,30 @@ public class InitDatabase {
             likeDao.alterSequenceLike();
             subscriptionDao.alterSequenceSubs();
 
-            userDao.saveAll(createUsers());
+//            userDao.saveAll(createUsers());
+            userDao.register(createUsers().get(0));
+            userDao.register(createUsers().get(1));
+            userDao.register(createUsers().get(2));
+            userDao.register(createUsers().get(3));
+            userDao.register(createUsers().get(4));
             publicationDao.saveAll(createPublications());
             commentDao.saveAll(createComments());
             likeDao.saveAll(createLikes());
             subscriptionDao.saveAll(createSubscription());
         };
     }
-    private List<User> createUsers(){
+
+    public List<User> createUsers() {
         List<User> users = new ArrayList<>();
-        users.add(new User(1,"salmor","ss@mail.ru","salmorSS","qwerty",true,7,0,0));
-        users.add(new User(2, "sam", "sss@mail.com", "samS", "qwerty",true, 0,0,6));
-        users.add(new User(3, "samuel", "s@gmail.com", "samuelSS", "qwerty",true, 3,6,0));
-        users.add(new User(4, "sasha", "sasha@gmail.com", "sashka", "qwerty",true, 0,4,0));
-        users.add(new User(5, "serdar", "serdar@gmail.com", "sergei", "qwerty",true, 4,0,0));
+        users.add(new User(1, "salmor", "ss@mail.ru", "salmorSS", "qwerty", true, 7, 0, 0, "USER"));
+        users.add(new User(2, "sam", "sss@mail.com", "samS", "qwerty", true, 0, 0, 6, "USER"));
+        users.add(new User(3, "samuel", "s@gmail.com", "samuelSS", "qwerty", true, 3, 6, 0, "USER"));
+        users.add(new User(4, "sasha", "sasha@gmail.com", "sashka", "qwerty", true, 0, 4, 0, "USER"));
+        users.add(new User(5, "serdar", "serdar@gmail.com", "sergei", "qwerty", true, 4, 0, 0, "USER"));
         return users;
     }
 
-    private List<Publication> createPublications(){
+    private List<Publication> createPublications() {
         List<Publication> publications = new ArrayList<>();
         publications.add(new Publication(1,"","qwertyuiop", LocalDateTime.now(),1));
         publications.add(new Publication(2,"","123456789",LocalDateTime.now(),1));
@@ -63,13 +66,13 @@ public class InitDatabase {
         publications.add(new Publication(3,"","asdasda",LocalDateTime.now(),4));
         return publications;
     }
-    private List<Comment> createComments(){
+    private List<Comment> createComments() {
         List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment(1,"Cool", LocalDateTime.now()));
-        comments.add(new Comment(2,"Красава", LocalDateTime.now()));
-        comments.add(new Comment(3,"ты чорт", LocalDateTime.now()));
-        comments.add(new Comment(4,"ты!", LocalDateTime.now()));
-        comments.add(new Comment(5,"чорт!!!", LocalDateTime.now()));
+        comments.add(new Comment(1, 2, "Cool", LocalDateTime.now()));
+        comments.add(new Comment(2, 1, "Красава", LocalDateTime.now()));
+        comments.add(new Comment(3, 1, "ты чорт", LocalDateTime.now()));
+        comments.add(new Comment(4, 3, "ты!", LocalDateTime.now()));
+        comments.add(new Comment(5, 4, "чорт!!!", LocalDateTime.now()));
         return comments;
     }
     private List<Like> createLikes(){

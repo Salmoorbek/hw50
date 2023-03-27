@@ -4,7 +4,6 @@ import com.example.hw50.entity.Publication;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder(access = AccessLevel.PRIVATE)
@@ -16,11 +15,13 @@ public class PublicationDto {
     private String img;
     private String description;
     private LocalDateTime publicationTime;
+    private int userId;
 
     public static PublicationDto from(Publication publication){
         return builder()
                 .id(publication.getId())
                 .img(publication.getImg())
+                .id(publication.getUserID())
                 .description(publication.getDescription())
                 .publicationTime(publication.getTimeOfPublication())
                 .build();
